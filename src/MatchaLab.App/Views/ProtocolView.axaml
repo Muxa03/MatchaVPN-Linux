@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MatchaLab.App.Views.ProtocolView">
+
+    <DockPanel>
+
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="Auto,*,Auto" Margin="20,8,20,16">
+            <Button Classes="reset lift" Click="Back_Click" VerticalAlignment="Center">
+                <Border Width="40" Height="40" CornerRadius="14" Background="{DynamicResource Card}">
+                    <Viewbox Width="18" Height="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="M 15,4 L 8,12 L 15,20" Stroke="{DynamicResource Cream}" StrokeThickness="2.6"
+                                  StrokeLineCap="Round" StrokeJoin="Round" />
+                        </Canvas>
+                    </Viewbox>
+                </Border>
+            </Button>
+            <TextBlock Grid.Column="1" Classes="display" Text="ПРОТОКОЛ" FontSize="22" FontWeight="Black"
+                       Foreground="{DynamicResource Cream}" VerticalAlignment="Center" Margin="14,0,0,0" />
+        </Grid>
+
+        <ScrollViewer>
+            <StackPanel Margin="20,0,20,20" Spacing="10">
+                <TextBlock Classes="mono" Text="Один ключ работает в обоих. Выбери, как выходить в сеть."
+                           FontSize="11" Opacity="0.55" Foreground="{DynamicResource Cream}"
+                           TextWrapping="Wrap" Margin="2,0,2,4" />
+
+                <Button Classes="reset lift" Click="Pick_Click"
+                        Command="{Binding SelectProtoCommand}" CommandParameter="amneziaWG">
+                    <Border CornerRadius="18" Background="{DynamicResource Card}" Padding="18,15">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="MatchaWG" FontSize="17" FontWeight="Black" Foreground="{DynamicResource Cream}" />
+                                <TextBlock Text="AmneziaWG · обфускация трафика, максимальная скорость" FontSize="11"
+                                           Opacity="0.6" Foreground="{DynamicResource Cream}" TextWrapping="Wrap" />
+                            </StackPanel>
+                            <Ellipse Grid.Column="1" Width="11" Height="11" Fill="{DynamicResource Accent}"
+                                     VerticalAlignment="Center" Margin="12,0,0,0" IsVisible="{Binding IsMatchaWg}" />
+                        </Grid>
+                    </Border>
+                </Button>
+
+                <Button Classes="reset lift" Click="Pick_Click"
+                        Command="{Binding SelectProtoCommand}" CommandParameter="hysteria2">
+                    <Border CornerRadius="18" Background="{DynamicResource Card}" Padding="18,15">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Hysteria2" FontSize="17" FontWeight="Black" Foreground="{DynamicResource Cream}" />
+                                <TextBlock Text="QUIC · маскировка под HTTPS, устойчив к блокировкам" FontSize="11"
+                                           Opacity="0.6" Foreground="{DynamicResource Cream}" TextWrapping="Wrap" />
+                            </StackPanel>
+                            <Ellipse Grid.Column="1" Width="11" Height="11" Fill="{DynamicResource Accent}"
+                                     VerticalAlignment="Center" Margin="12,0,0,0" IsVisible="{Binding IsHysteria2}" />
+                        </Grid>
+                    </Border>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,56 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="MatchaLab.App.Views.MainWindow"
+        Title="MatchaVPN"
+        Width="404" Height="772" CanResize="False"
+        Background="{DynamicResource Bg}"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="0"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Styles>
+        <Style Selector="Button.win">
+            <Setter Property="Width" Value="42" />
+            <Setter Property="Height" Value="34" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource Cream}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Button.win:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#22FFFFFF" />
+        </Style>
+        <Style Selector="Button.win.danger:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#E0483C" />
+        </Style>
+    </Window.Styles>
+
+    <Viewbox Stretch="Uniform">
+        <Grid Width="404" Height="772">
+            <DockPanel>
+
+                <Grid DockPanel.Dock="Top" Height="36" Background="Transparent" PointerPressed="Chrome_Pressed">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Margin="12,0,0,0" Spacing="8">
+                        <Border Width="18" Height="18" CornerRadius="5" ClipToBounds="True">
+                            <Image x:Name="LogoImage" Stretch="UniformToFill" />
+                        </Border>
+                        <TextBlock Text="MatchaVPN" FontSize="12.5" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource Cream}" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Classes="win" Content="—" Click="Min_Click" />
+                        <Button Classes="win danger" Content="✕" Click="Close_Click" />
+                    </StackPanel>
+                </Grid>
+
+                <TransitioningContentControl x:Name="Host" />
+            </DockPanel>
+        </Grid>
+    </Viewbox>
+</Window>

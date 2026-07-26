@@ -1,0 +1,23 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:app="clr-namespace:MatchaLab.App">
+
+    <app:FlagToCodeConverter x:Key="FlagCode" />
+
+    <FontFamily x:Key="AccentFont">avares://MatchaLab/Assets/Nunito-Black.ttf#Nunito Black</FontFamily>
+
+    <FontFamily x:Key="NumFont">avares://MatchaLab/Assets/Nunito-Black.ttf#Nunito Black</FontFamily>
+
+    <FontFamily x:Key="SemiFont">avares://MatchaLab/Assets/Nunito-ExtraBold.ttf#Nunito ExtraBold</FontFamily>
+
+    <FontFamily x:Key="MonoFont">Consolas</FontFamily>
+
+    <SolidColorBrush x:Key="Bg" Color="#412B42" />
+    <SolidColorBrush x:Key="Card" Color="#291E24" />
+    <SolidColorBrush x:Key="Accent" Color="#86A88E" />
+    <SolidColorBrush x:Key="Cream" Color="#F2E7EC" />
+    <SolidColorBrush x:Key="Taro" Color="#754A70" />
+    <SolidColorBrush x:Key="Ink" Color="#412B42" />
+    <SolidColorBrush x:Key="GlowHi" Color="#A6C4AD" />
+    <SolidColorBrush x:Key="GlowLo" Color="#6E9077" />
+</ResourceDictionary>

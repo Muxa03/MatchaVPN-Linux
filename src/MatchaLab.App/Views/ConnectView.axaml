@@ -1,0 +1,349 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MatchaLab.App.Views.ConnectView">
+
+    <UserControl.Styles>
+
+        <Style Selector="Button.hero">
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="RenderTransformOrigin" Value="50%,50%" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </ControlTemplate>
+            </Setter>
+            <Setter Property="Transitions">
+                <Transitions>
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.25" Easing="BackEaseOut" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Button.hero:pointerover">
+            <Setter Property="RenderTransform" Value="scale(1.035)" />
+        </Style>
+        <Style Selector="Button.hero:pressed">
+            <Setter Property="RenderTransform" Value="scale(0.95)" />
+        </Style>
+
+        <Style Selector="Path.whisk">
+            <Setter Property="Stroke" Value="{DynamicResource Accent}" />
+            <Setter Property="StrokeLineCap" Value="Round" />
+            <Setter Property="StrokeJoin" Value="Round" />
+            <Setter Property="Transitions">
+                <Transitions><BrushTransition Property="Stroke" Duration="0:0:0.35" /></Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Button.hero.on Path.whisk">
+            <Setter Property="Stroke" Value="{DynamicResource Ink}" />
+        </Style>
+
+        <Style Selector="TextBlock.center">
+            <Setter Property="Foreground" Value="{DynamicResource Accent}" />
+            <Setter Property="Transitions">
+                <Transitions><BrushTransition Property="Foreground" Duration="0:0:0.35" /></Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Button.hero.on TextBlock.center">
+            <Setter Property="Foreground" Value="{DynamicResource Ink}" />
+        </Style>
+
+        <Style Selector="Border.core">
+            <Setter Property="Background" Value="#332630" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Accent}" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.4" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Button.hero.on Border.core">
+            <Setter Property="Background" Value="{DynamicResource Accent}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style Selector="Ellipse.coreglow">
+            <Setter Property="Opacity" Value="0" />
+            <Setter Property="Transitions">
+                <Transitions><DoubleTransition Property="Opacity" Duration="0:0:0.55" Easing="SineEaseOut" /></Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Button.hero.on Ellipse.coreglow">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <Style Selector="Button.hero.busy Border.core">
+            <Style.Animations>
+                <Animation Duration="0:0:1.1" IterationCount="Infinite" Easing="SineEaseInOut">
+                    <KeyFrame Cue="0%"><Setter Property="Opacity" Value="1" /></KeyFrame>
+                    <KeyFrame Cue="50%"><Setter Property="Opacity" Value="0.5" /></KeyFrame>
+                    <KeyFrame Cue="100%"><Setter Property="Opacity" Value="1" /></KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+
+        <Style Selector="Ellipse.dashring">
+            <Setter Property="RenderTransformOrigin" Value="50%,50%" />
+            <Setter Property="Transitions">
+                <Transitions><DoubleTransition Property="Opacity" Duration="0:0:0.4" /></Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Button.hero.on Ellipse.dashring">
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+
+        <Style Selector="Border.pill Ellipse">
+            <Setter Property="Fill" Value="{DynamicResource Cream}" />
+            <Setter Property="Opacity" Value="0.35" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Fill" Duration="0:0:0.3" />
+                    <DoubleTransition Property="Opacity" Duration="0:0:0.3" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Border.pill.on Ellipse">
+            <Setter Property="Fill" Value="{DynamicResource Accent}" />
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+
+        <Ellipse Width="560" Height="560" HorizontalAlignment="Center" VerticalAlignment="Top"
+                 Margin="0,-200,0,0" IsHitTestVisible="False" Fill="{DynamicResource GlowSoftBrush}" />
+
+        <ScrollViewer x:Name="PageScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Spacing="12" Margin="20,4,20,24">
+
+                <Grid Margin="0,2,0,0">
+                    <StackPanel VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Spacing="9">
+                            <TextBlock Classes="display" FontSize="29" FontWeight="Black" VerticalAlignment="Center"><Run Text="MAT" Foreground="{DynamicResource Cream}" /><Run Text="CHA" Foreground="{DynamicResource Accent}" /></TextBlock>
+                            <Border Width="19" Height="19" CornerRadius="10" BorderBrush="{DynamicResource Accent}"
+                                    BorderThickness="2" VerticalAlignment="Center">
+                                <TextBlock Text="C" FontSize="9" FontWeight="Black" Foreground="{DynamicResource Accent}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </StackPanel>
+                        <TextBlock Classes="mono" Text="{Binding VersionText}" FontSize="9.5" LetterSpacing="3" Opacity="0.45"
+                                   Foreground="{DynamicResource Cream}" Margin="0,3,0,0" />
+                    </StackPanel>
+                    <Button Classes="reset lift" HorizontalAlignment="Right" VerticalAlignment="Center" Click="Menu_Click">
+                        <Border Width="46" Height="46" CornerRadius="16" Background="{DynamicResource Accent}"
+                                BoxShadow="{DynamicResource MenuGlow}">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="4.5">
+                                <Border Width="18" Height="2.6" CornerRadius="2" Background="{DynamicResource Ink}" />
+                                <Border Width="18" Height="2.6" CornerRadius="2" Background="{DynamicResource Ink}" />
+                                <Border Width="18" Height="2.6" CornerRadius="2" Background="{DynamicResource Ink}" />
+                            </StackPanel>
+                        </Border>
+                    </Button>
+                </Grid>
+
+                <Border Classes="card" Padding="20" CornerRadius="30" Background="{DynamicResource Card}"
+                        BorderBrush="{DynamicResource Accent}" BorderThickness="1">
+                    <StackPanel>
+                        <Grid Height="34">
+                            <Border Classes="pill" Classes.on="{Binding IsConnected}"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    CornerRadius="20" Background="#1EFFFFFF" Padding="13,7">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Ellipse Width="8" Height="8" VerticalAlignment="Center" />
+                                    <TextBlock Classes="mono" Text="{Binding PillText}" FontSize="11" FontWeight="Bold"
+                                               LetterSpacing="0.6" Foreground="{DynamicResource Cream}"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock x:Name="TimerText" Classes="mono swap" Text="{Binding SessionTime}"
+                                       HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       FontSize="15" FontWeight="SemiBold" Opacity="0.75"
+                                       Foreground="{DynamicResource Cream}" />
+                        </Grid>
+
+                        <TextBlock Classes="display" Text="stay green" FontSize="30" FontStyle="Italic"
+                                   Foreground="{DynamicResource Accent}" HorizontalAlignment="Center"
+                                   RenderTransform="rotate(-4deg)" Margin="0,8,0,2" />
+
+                        <Grid Height="248" Margin="0,4">
+                            <Grid Width="244" Height="244" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Button Classes="hero reset" Command="{Binding ToggleCommand}"
+                                        Classes.on="{Binding IsConnected}"
+                                        Classes.busy="{Binding IsBusy}">
+                                    <Grid Width="244" Height="244">
+                                        <Ellipse Classes="coreglow" Width="244" Height="244" IsHitTestVisible="False"
+                                                 Fill="{DynamicResource CoreGlowBrush}" />
+
+                                        <Ellipse x:Name="RingOuter" Classes="dashring" Width="242" Height="242"
+                                                 Stroke="{DynamicResource Accent}" StrokeThickness="1.5"
+                                                 Opacity="0.2" StrokeDashArray="1,7" />
+
+                                        <Ellipse x:Name="RingInner" Classes="dashring" Width="216" Height="216"
+                                                 Stroke="{DynamicResource Accent}" StrokeThickness="2"
+                                                 Opacity="0.32" StrokeDashArray="4,5" />
+                                        <Border Classes="core" Width="204" Height="204" CornerRadius="102">
+                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="4">
+                                                <Viewbox Width="66" Height="66">
+                                                    <Canvas Width="24" Height="24">
+                                                        <Path Classes="whisk" StrokeThickness="3.2" Data="M12,15 L12,21.5" />
+                                                        <Path Classes="whisk" StrokeThickness="1.7"
+                                                              Data="M12,15 L12,3.5 M12,15 C11,9.5 9.8,6.5 9.3,3.7 M12,15 C13,9.5 14.2,6.5 14.7,3.7 M12,15 C10,10.5 7.6,8.5 6.6,5 M12,15 C14,10.5 16.4,8.5 17.4,5 M9.2,14.4 Q12,16.2 14.8,14.4" />
+                                                    </Canvas>
+                                                </Viewbox>
+                                                <TextBlock Classes="center display" Text="{Binding CenterText}" FontSize="24"
+                                                           LetterSpacing="2" HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Button>
+
+                                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-28,-8,0"
+                                            IsVisible="{Binding !IsConnected}" RenderTransform="rotate(-8deg)"
+                                            IsHitTestVisible="False">
+                                    <TextBlock Classes="display" Text="жми" FontSize="20" FontStyle="Italic"
+                                               Foreground="{DynamicResource Accent}" HorizontalAlignment="Center" />
+                                    <Viewbox Width="50" Height="35">
+                                        <Canvas Width="100" Height="100">
+                                            <Path Stroke="{DynamicResource Accent}" StrokeThickness="6" StrokeLineCap="Round"
+                                                  Data="M93,15 C57,5 23,35 16,85 M16,85 L9,55 M16,85 L38,75" />
+                                        </Canvas>
+                                    </Viewbox>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+
+                        <Viewbox StretchDirection="DownOnly" HorizontalAlignment="Center" Margin="0,4,0,0"
+                                 Height="45">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <TextBlock Classes="display" Text="{Binding HeroWord1}" FontSize="33" FontWeight="Black"
+                                           Foreground="{DynamicResource Accent}" />
+                                <TextBlock Classes="display" Text="{Binding HeroWord2}" FontSize="33" FontWeight="Black"
+                                           Foreground="{DynamicResource Cream}" />
+                            </StackPanel>
+                        </Viewbox>
+                    </StackPanel>
+                </Border>
+
+                <UniformGrid Columns="2">
+
+                    <Button Classes="reset lift" Click="Location_Click" Focusable="False" Margin="0,0,6,0">
+                        <Border Classes="card" CornerRadius="24" Background="{DynamicResource Cream}"
+                                Padding="16" Width="176" Height="132">
+                            <Grid RowDefinitions="Auto,*,Auto">
+                                <Grid>
+                                    <TextBlock Classes="label" Text="ЛОКАЦИЯ" Foreground="{DynamicResource Ink}"
+                                               Opacity="0.72" VerticalAlignment="Center" />
+                                    <Border CornerRadius="12" Background="{DynamicResource Ink}" Padding="9,4"
+                                            HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <TextBlock Classes="mono" Text="СМЕНИТЬ" FontSize="8" FontWeight="Bold"
+                                                   LetterSpacing="0.8" Foreground="{DynamicResource Cream}" />
+                                    </Border>
+                                </Grid>
+                                <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                    <Border Width="36" Height="26" CornerRadius="9" Background="{DynamicResource Bg}"
+                                            VerticalAlignment="Center">
+                                        <TextBlock Classes="mono" Text="{Binding CurrentFlag, Converter={StaticResource FlagCode}}"
+                                                   FontSize="12" FontWeight="Black" LetterSpacing="0.5"
+                                                   Foreground="{DynamicResource Cream}"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+
+                                    <TextBlock Classes="display swap" x:Name="CountryText"
+                                               Text="{Binding CurrentCountryDisplay}" FontSize="16"
+                                               Foreground="{DynamicResource Ink}" VerticalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                                <TextBlock Grid.Row="2" Classes="mono" Text="{Binding CurrentCity}" FontSize="10" Opacity="0.75"
+                                           Foreground="{DynamicResource Ink}" TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </Border>
+                    </Button>
+
+                    <Border Classes="card" CornerRadius="24" Background="{DynamicResource Accent}"
+                            Padding="16" Width="176" Height="132" Margin="6,0,0,0">
+                        <Grid RowDefinitions="Auto,*,Auto">
+                            <TextBlock Classes="label" Text="ПИНГ" Foreground="{DynamicResource Ink}" Opacity="0.72" />
+
+                            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" VerticalAlignment="Center">
+                                <TextBlock x:Name="PingNum" Classes="num swap" Text="{Binding PingText}" FontSize="36"
+                                           Width="92" TextAlignment="Left" Foreground="{DynamicResource Ink}" />
+                                <TextBlock Grid.Column="1" Classes="mono" Text="мс" FontSize="13" FontWeight="Black"
+                                           VerticalAlignment="Bottom" Margin="0,0,0,7" Opacity="0.72"
+                                           Foreground="{DynamicResource Ink}" />
+                            </Grid>
+                            <TextBlock Grid.Row="2" Classes="mono" Text="до сервера" FontSize="10" Opacity="0.72"
+                                       Foreground="{DynamicResource Ink}" />
+                        </Grid>
+                    </Border>
+                </UniformGrid>
+
+                <UniformGrid Columns="2">
+                    <Border Classes="card" CornerRadius="24" Background="{DynamicResource Card}"
+                            Padding="16" Width="176" Height="132" Margin="0,0,6,0">
+                        <Grid RowDefinitions="Auto,*,Auto">
+                            <TextBlock Classes="label" Text="ВСЕГО ТРАФИКА" Foreground="{DynamicResource Cream}" />
+                            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" VerticalAlignment="Center">
+                                <TextBlock x:Name="TrafficNumText" Classes="num swap" Text="{Binding TrafficNum}" FontSize="36"
+                                           Width="92" TextAlignment="Left" Foreground="{DynamicResource Cream}" />
+                                <TextBlock Grid.Column="1" Classes="mono" Text="{Binding TrafficUnit}" FontSize="13"
+                                           FontWeight="Black" VerticalAlignment="Bottom" Margin="0,0,0,6" Opacity="0.5"
+                                           Foreground="{DynamicResource Cream}" />
+                            </Grid>
+                            <TextBlock Grid.Row="2" Classes="mono" Text="за всё время" FontSize="10" Opacity="0.45"
+                                       Foreground="{DynamicResource Cream}" />
+                        </Grid>
+                    </Border>
+
+                    <Button Classes="reset lift" Command="{Binding MeasureSpeedCommand}" Focusable="False" Margin="6,0,0,0">
+                        <Border Classes="card" CornerRadius="24" Background="{DynamicResource Cream}"
+                                Padding="16" Width="176" Height="132">
+                            <Grid RowDefinitions="Auto,*,Auto">
+                                <TextBlock Classes="label" Text="СКОРОСТЬ" Foreground="{DynamicResource Ink}" Opacity="0.72" />
+                                <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" VerticalAlignment="Center">
+                                    <TextBlock x:Name="SpeedNum" Classes="num swap" Text="{Binding SpeedText}" FontSize="36"
+                                               Width="92" TextAlignment="Left" Foreground="{DynamicResource Ink}" />
+                                    <TextBlock Grid.Column="1" Classes="mono" Text="Мбит/с" FontSize="12"
+                                               FontWeight="Black" VerticalAlignment="Bottom" Margin="0,0,0,6" Opacity="0.72"
+                                               Foreground="{DynamicResource Ink}" />
+                                </Grid>
+                                <TextBlock Grid.Row="2" Classes="mono" Text="нажми — замерим" FontSize="10" Opacity="0.75"
+                                           Foreground="{DynamicResource Ink}" IsVisible="{Binding !MeasuringSpeed}" />
+                                <TextBlock Grid.Row="2" Classes="mono" Text="замеряем…" FontSize="10" Opacity="0.85"
+                                           Foreground="{DynamicResource Ink}" IsVisible="{Binding MeasuringSpeed}" />
+                            </Grid>
+                        </Border>
+                    </Button>
+                </UniformGrid>
+
+                <Button Classes="reset lift" Click="Protocol_Click" Focusable="False"
+                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                    <Border Classes="card" CornerRadius="24" Background="{DynamicResource Taro}" Padding="16" Height="132">
+                        <Grid RowDefinitions="Auto,*,Auto">
+                            <Grid>
+                                <TextBlock Classes="label" Text="ПРОТОКОЛ" Foreground="{DynamicResource Cream}"
+                                           VerticalAlignment="Center" />
+                                <Border CornerRadius="12" Background="{DynamicResource Cream}" Padding="9,4"
+                                        HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock Classes="mono" Text="СМЕНИТЬ" FontSize="8" FontWeight="Bold"
+                                               LetterSpacing="0.8" Foreground="{DynamicResource Taro}" />
+                                </Border>
+                            </Grid>
+                            <TextBlock Grid.Row="1" Classes="display" Text="{Binding ProtoName}" FontSize="26"
+                                       Foreground="{DynamicResource Cream}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="2" Classes="mono" Text="{Binding ProtoSubtitle}" FontSize="10" Opacity="0.55"
+                                       Foreground="{DynamicResource Cream}" />
+                        </Grid>
+                    </Border>
+                </Button>
+
+                <TextBlock Text="{Binding ErrorText}" Foreground="#FFE58A8A" TextWrapping="Wrap" HorizontalAlignment="Center"
+                           IsVisible="{Binding ErrorText, Converter={x:Static ObjectConverters.IsNotNull}}" Margin="0,2,0,0" />
+
+                <TextBlock Classes="mono" Text="MatchaLab · stay green" FontSize="9" LetterSpacing="1.5" Opacity="0.3"
+                           Foreground="{DynamicResource Cream}" HorizontalAlignment="Center" Margin="0,4,0,0" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

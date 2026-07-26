@@ -1,0 +1,102 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MatchaLab.App.Views.ServersView">
+
+    <UserControl.Styles>
+        <Style Selector="ListBox">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="ListBoxItem">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0,0,0,10" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="RenderTransformOrigin" Value="50%,50%" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.18" Easing="CubicEaseOut" />
+                </Transitions>
+            </Setter>
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border Name="ring" CornerRadius="20" BorderThickness="2" BorderBrush="Transparent">
+                        <Border.Transitions>
+                            <Transitions><BrushTransition Property="BorderBrush" Duration="0:0:0.2" /></Transitions>
+                        </Border.Transitions>
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+        <Style Selector="ListBoxItem:pointerover">
+            <Setter Property="RenderTransform" Value="translateX(3px)" />
+        </Style>
+        <Style Selector="ListBoxItem:pointerover /template/ Border#ring">
+            <Setter Property="BorderBrush" Value="#2EFFFFFF" />
+        </Style>
+        <Style Selector="ListBoxItem:selected /template/ Border#ring">
+            <Setter Property="BorderBrush" Value="{DynamicResource Accent}" />
+        </Style>
+
+        <Style Selector="Ellipse.dot">
+            <Setter Property="Opacity" Value="0.22" />
+            <Setter Property="Transitions">
+                <Transitions><DoubleTransition Property="Opacity" Duration="0:0:0.25" /></Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="ListBoxItem:selected Ellipse.dot">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </UserControl.Styles>
+
+    <DockPanel>
+
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="Auto,*,Auto" Margin="20,8,20,16">
+            <Button Classes="reset lift" Click="Back_Click" VerticalAlignment="Center">
+                <Border Width="40" Height="40" CornerRadius="14" Background="{DynamicResource Card}">
+                    <Viewbox Width="18" Height="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="M 15,4 L 8,12 L 15,20" Stroke="{DynamicResource Cream}" StrokeThickness="2.6"
+                                  StrokeLineCap="Round" StrokeJoin="Round" />
+                        </Canvas>
+                    </Viewbox>
+                </Border>
+            </Button>
+            <TextBlock Grid.Column="1" Classes="display" Text="СЕРВЕРЫ" FontSize="22" FontWeight="Black"
+                       Foreground="{DynamicResource Cream}" VerticalAlignment="Center" Margin="14,0,0,0" />
+            <Button Grid.Column="2" Classes="reset lift" Command="{Binding RefreshCatalogCommand}" VerticalAlignment="Center">
+                <Border CornerRadius="12" Background="#1EFFFFFF" Padding="12,8">
+                    <TextBlock Text="обновить" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource Accent}" />
+                </Border>
+            </Button>
+        </Grid>
+
+        <ListBox x:Name="ServerList" ItemsSource="{Binding Servers}" SelectedItem="{Binding SelectedServer, Mode=TwoWay}"
+                 Padding="20,0,20,20">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border CornerRadius="18" Background="{DynamicResource Card}" Padding="16,13">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <Border Width="46" Height="34" CornerRadius="12" Background="{DynamicResource Bg}"
+                                    VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Flag, Converter={StaticResource FlagCode}}" FontSize="14"
+                                           FontWeight="Black" Foreground="{DynamicResource Cream}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center" Spacing="2">
+                                <TextBlock Text="{Binding City}" FontSize="15" FontWeight="Black"
+                                           Foreground="{DynamicResource Cream}" />
+                                <TextBlock Text="{Binding Country}" FontSize="11" Opacity="0.6"
+                                           Foreground="{DynamicResource Cream}" />
+                            </StackPanel>
+                            <Ellipse Grid.Column="2" Classes="dot" Width="9" Height="9" Fill="{DynamicResource Accent}"
+                                     VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</UserControl>

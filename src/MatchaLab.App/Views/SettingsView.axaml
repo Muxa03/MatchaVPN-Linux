@@ -1,0 +1,213 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MatchaLab.App.Views.SettingsView">
+
+    <UserControl.Styles>
+
+        <Style Selector="Border.swatch">
+            <Setter Property="Background" Value="#14FFFFFF" />
+            <Setter Property="CornerRadius" Value="14" />
+            <Setter Property="Padding" Value="13,9" />
+        </Style>
+
+        <Style Selector="Border.pilbtn">
+            <Setter Property="Background" Value="#1EFFFFFF" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="Transitions">
+                <Transitions><BrushTransition Property="Background" Duration="0:0:0.15" /></Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Button.reset:pointerover Border.pilbtn">
+            <Setter Property="Background" Value="#30FFFFFF" />
+        </Style>
+
+        <Style Selector="TextBlock.del">
+            <Setter Property="Opacity" Value="0.45" />
+            <Setter Property="Transitions">
+                <Transitions><DoubleTransition Property="Opacity" Duration="0:0:0.15" /></Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Button.reset:pointerover TextBlock.del">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </UserControl.Styles>
+
+    <DockPanel>
+
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="Auto,*" Margin="20,8,20,16">
+            <Button Classes="reset lift" Click="Back_Click" VerticalAlignment="Center">
+                <Border Width="40" Height="40" CornerRadius="14" Background="{DynamicResource Card}">
+                    <Viewbox Width="18" Height="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="M 15,4 L 8,12 L 15,20" Stroke="{DynamicResource Cream}" StrokeThickness="2.6"
+                                  StrokeLineCap="Round" StrokeJoin="Round" />
+                        </Canvas>
+                    </Viewbox>
+                </Border>
+            </Button>
+            <TextBlock Grid.Column="1" Classes="display" Text="НАСТРОЙКИ" FontSize="22" FontWeight="Black"
+                       Foreground="{DynamicResource Cream}" VerticalAlignment="Center" Margin="14,0,0,0" />
+        </Grid>
+
+        <ScrollViewer x:Name="SettingsScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Spacing="18" Margin="20,2,20,24">
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="label" Text="РАЗДЕЛЬНОЕ ТУННЕЛИРОВАНИЕ" Foreground="{DynamicResource Cream}" Margin="2,0,0,0" />
+                    <Border Classes="card" Background="{DynamicResource Card}" CornerRadius="24" Padding="18">
+                        <StackPanel Spacing="14">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel VerticalAlignment="Center" Spacing="3">
+                                    <TextBlock Text="Российские сервисы напрямую" FontSize="14" FontWeight="Bold"
+                                               Foreground="{DynamicResource Cream}" />
+                                    <TextBlock Text="Госуслуги, банки, маркетплейсы — мимо VPN" FontSize="11" Opacity="0.55"
+                                               TextWrapping="Wrap" Foreground="{DynamicResource Cream}" />
+                                </StackPanel>
+                                <ToggleButton Grid.Column="1" Classes="switch" IsChecked="{Binding RuEnabled, Mode=TwoWay}"
+                                              VerticalAlignment="Center" />
+                            </Grid>
+                            <Border Height="1" Background="#1AFFFFFF" />
+                            <StackPanel Spacing="10">
+                                <TextBlock Text="Свои сайты — тоже напрямую" FontSize="14" FontWeight="Bold"
+                                           Foreground="{DynamicResource Cream}" />
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBox x:Name="DomainBox" Watermark="example.com" KeyDown="Domain_KeyDown"
+                                             Height="40" VerticalContentAlignment="Center" />
+
+                                    <Button Grid.Column="1" Classes="reset lift" Click="AddDomain_Click" Margin="8,0,0,0">
+                                        <Border CornerRadius="12" Background="{DynamicResource Accent}" Height="40"
+                                                MinWidth="96" Padding="18,0">
+                                            <TextBlock Text="добавить" FontSize="13" FontWeight="Bold"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                       Foreground="{DynamicResource Ink}" />
+                                        </Border>
+                                    </Button>
+                                </Grid>
+                                <ItemsControl ItemsSource="{Binding Domains}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="#14FFFFFF" CornerRadius="10" Padding="12,8" Margin="0,0,0,6">
+                                                <Grid ColumnDefinitions="*,Auto">
+                                                    <TextBlock Text="{Binding}" FontSize="13" VerticalAlignment="Center"
+                                                               Foreground="{DynamicResource Cream}" />
+                                                    <Button Grid.Column="1" Classes="reset" Click="RemoveDomain_Click"
+                                                            Tag="{Binding}">
+                                                        <TextBlock Classes="del" Text="✕" FontSize="12"
+                                                                   Foreground="{DynamicResource Cream}" />
+                                                    </Button>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="label" Text="ТЕМА" Foreground="{DynamicResource Cream}" Margin="2,0,0,0" />
+                    <Border Classes="card" Background="{DynamicResource Card}" CornerRadius="24" Padding="18">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Button Classes="reset lift" Tag="matcha" Click="Theme_Click">
+                                <Border Classes="swatch">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Ellipse Width="18" Height="18" Fill="#CFDA5A" VerticalAlignment="Center" />
+                                        <TextBlock Text="матча" FontSize="13" FontWeight="Bold"
+                                                   Foreground="{DynamicResource Cream}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Border>
+                            </Button>
+                            <Button Classes="reset lift" Tag="taro" Click="Theme_Click">
+                                <Border Classes="swatch">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Ellipse Width="18" Height="18" Fill="#86A88E" VerticalAlignment="Center" />
+                                        <TextBlock Text="таро" FontSize="13" FontWeight="Bold"
+                                                   Foreground="{DynamicResource Cream}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Border>
+                            </Button>
+                            <Button Classes="reset lift" Tag="pumpkin" Click="Theme_Click">
+                                <Border Classes="swatch">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Ellipse Width="18" Height="18" Fill="#FF8A00" VerticalAlignment="Center" />
+                                        <TextBlock Text="тыква" FontSize="13" FontWeight="Bold"
+                                                   Foreground="{DynamicResource Cream}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Border>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="label" Text="КЛЮЧ ДОСТУПА" Foreground="{DynamicResource Cream}" Margin="2,0,0,0" />
+                    <Border Classes="card" Background="{DynamicResource Card}" CornerRadius="24" Padding="18">
+
+                        <StackPanel Spacing="14">
+                            <StackPanel Spacing="3">
+                                <TextBlock Text="{Binding KeyMasked}" FontFamily="{DynamicResource MonoFont}" FontSize="15"
+                                           Foreground="{DynamicResource Cream}" TextTrimming="CharacterEllipsis" />
+                                <TextBlock Text="{Binding KeyStorageNote}" FontSize="11" Opacity="0.55"
+                                           TextWrapping="Wrap" Foreground="{DynamicResource Cream}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                                <Button Classes="reset lift" Click="TopUp_Click">
+                                    <Border CornerRadius="12" Background="{DynamicResource Accent}" Padding="14,8">
+                                        <TextBlock Text="пополнить" FontSize="12" FontWeight="Bold"
+                                                   Foreground="{DynamicResource Ink}" />
+                                    </Border>
+                                </Button>
+                                <Button Classes="reset" Click="ChangeKey_Click">
+                                    <Border Classes="pilbtn">
+                                        <TextBlock Text="сменить" FontSize="12" Foreground="{DynamicResource Cream}" />
+                                    </Border>
+                                </Button>
+                                <Button Classes="reset" Command="{Binding SignOutCommand}">
+                                    <Border Classes="pilbtn">
+                                        <TextBlock Text="отвязать" FontSize="12" Foreground="{DynamicResource Cream}" />
+                                    </Border>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="label" Text="СИСТЕМА" Foreground="{DynamicResource Cream}" Margin="2,0,0,0" />
+                    <Border Classes="card" Background="{DynamicResource Card}" CornerRadius="24" Padding="18">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <StackPanel VerticalAlignment="Center" Spacing="3">
+                                <TextBlock Text="{Binding AutostartTitle}" FontSize="14" FontWeight="Bold"
+                                           Foreground="{DynamicResource Cream}" />
+                                <TextBlock Text="стартовать свёрнутым вместе с системой" FontSize="11" Opacity="0.55"
+                                           Foreground="{DynamicResource Cream}" />
+                            </StackPanel>
+                            <ToggleButton Grid.Column="1" Classes="switch" IsChecked="{Binding AutostartEnabled, Mode=TwoWay}"
+                                          VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="label" Text="О ПРОГРАММЕ" Foreground="{DynamicResource Cream}" Margin="2,0,0,0" />
+                    <Border Classes="card" Background="{DynamicResource Card}" CornerRadius="24" Padding="18">
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="{Binding AboutText}" FontSize="13" Foreground="{DynamicResource Cream}" />
+                            <StackPanel Orientation="Horizontal" Spacing="14">
+                                <Button Classes="reset" Click="Terms_Click">
+                                    <TextBlock Text="Соглашение" FontSize="13" Foreground="{DynamicResource Accent}" />
+                                </Button>
+                                <Button Classes="reset" Click="Privacy_Click">
+                                    <TextBlock Text="Политика" FontSize="13" Foreground="{DynamicResource Accent}" />
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>
